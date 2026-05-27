@@ -1,0 +1,90 @@
+@startuml MCD_MSPR
+
+skinparam linetype ortho
+skinparam EntityBackgroundColor #F0F4FF
+skinparam EntityBorderColor #3355AA
+skinparam ArrowColor #3355AA
+
+entity "DEPARTEMENT" as dept {
+    * code_dept : TEXT <<PK>>
+    --
+    libelle_dept : TEXT
+}
+
+entity "CHOMAGE" as cho {
+    * code_dept : TEXT <<PK, FK>>
+    * annee : INTEGER <<PK>>
+    --
+    taux_chomage_moyen : REAL
+    taux_chomage_min : REAL
+    taux_chomage_max : REAL
+    nb_trimestres : INTEGER
+}
+
+entity "DEMOGRAPHIE" as demo {
+    * code_dept : TEXT <<PK, FK>>
+    * annee : INTEGER <<PK>>
+    --
+    nb_arrondissement : INTEGER
+    nb_canton : INTEGER
+    nb_commune : INTEGER
+    pop_municipale : INTEGER
+    pop_totale : INTEGER
+}
+
+entity "CRIMINALITE" as crim {
+    * code_dept : TEXT <<PK, FK>>
+    * annee : INTEGER <<PK>>
+    * indicateur_clean : TEXT <<PK>>
+    --
+    indicateur : TEXT
+    unite_de_compte : TEXT
+    nombre : INTEGER
+    taux_pour_mille : REAL
+    insee_pop : INTEGER
+}
+
+entity "ELECTION" as elec {
+    * code_dept : TEXT <<PK, FK>>
+    * nom : TEXT <<PK>>
+    --
+    prenom : TEXT
+    sexe : TEXT
+    inscrits : INTEGER
+    abstentions : INTEGER
+    pct_abs_ins : REAL
+    votants : INTEGER
+    pct_vot_ins : REAL
+    blancs : INTEGER
+    pct_blancs_ins : REAL
+    pct_blancs_vot : REAL
+    nuls : INTEGER
+    pct_nuls_ins : REAL
+    pct_nuls_vot : REAL
+    exprimes : INTEGER
+    pct_exp_ins : REAL
+    pct_exp_vot : REAL
+    voix : INTEGER
+    pct_voix_ins : REAL
+    pct_voix_exp : REAL
+}
+
+entity "ENTREPRISES" as ent {
+    * code_dept : TEXT <<PK, FK>>
+    * annee : INTEGER <<PK>>
+    --
+    bure__total__total : INTEGER
+    bure__total__sarl : INTEGER
+    bure__total__sas_sasu : INTEGER
+    bure__total__entrepreneur_individuel : INTEGER
+    bure__total__autres_formes : INTEGER
+    .. 45 colonnes par secteur ..
+}
+
+dept ||--o{ cho   : ""
+dept ||--o{ demo  : ""
+dept ||--o{ crim  : ""
+dept ||--o{ elec  : ""
+dept ||--o{ ent   : ""
+
+@enduml
